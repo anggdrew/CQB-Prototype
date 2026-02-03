@@ -309,3 +309,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   life: 1
   dmg: 20
+  explosionPrefab: {fileID: 3187283609441800976, guid: fc2ee9ba4390d1f478ff8a9b5634ee8d, type: 3}

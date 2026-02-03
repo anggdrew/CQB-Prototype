@@ -4,18 +4,18 @@ public class Bullet : MonoBehaviour
 {
     public float life = 3f;
     public float dmg = 20f;
-    //public GameObject explosionPrefab;
+    public GameObject explosionPrefab;
 
     void Awake()
     {
         Destroy(gameObject, life);
     }
 
-    /*void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("destructable"))
+        /* if (collision.gameObject.CompareTag("Destructable")) //destructable terrain/objects
         {
-            Health target = collision.gameObject.transform.GetComponent<Health>();
+            //Health target = collision.gameObject.transform.GetComponent<Health>();
             if (target != null)
             {
                 target.TakeDmg(dmg);
@@ -23,8 +23,15 @@ public class Bullet : MonoBehaviour
                 //GameObject explosion = Instantiate(explosionPrefab, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
                 //Destroy(explosion, 0.1f);
             }
+        }*/
+
+        if (collision.gameObject.CompareTag("Indestructable Env")) //environment
+        {
+            Destroy(gameObject);
+            GameObject explosion = Instantiate(explosionPrefab, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
+            Destroy(explosion, 0.1f);       
         }
-    }*/
+    }
 
     void OnCollisionStay(Collision collision)
     {

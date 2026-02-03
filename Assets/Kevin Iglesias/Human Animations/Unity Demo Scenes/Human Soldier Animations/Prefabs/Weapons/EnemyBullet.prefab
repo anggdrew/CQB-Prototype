@@ -78,7 +78,7 @@ TrailRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Time: 1
-  m_PreviewTimeScale: 0
+  m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -309,3 +309,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   life: 1
   dmg: 20
+  explosionPrefab: {fileID: 3187283609441800976, guid: fc2ee9ba4390d1f478ff8a9b5634ee8d, type: 3}

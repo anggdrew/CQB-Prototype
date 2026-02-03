@@ -40,6 +40,7 @@ public class Player_Movement : MonoBehaviour
     public GameObject bulletPrefab;
     public float bulletSpeed = 10f;
     public float shot_cooldown = 10f;
+    public ParticleSystem muzzleflash;
 
     void Start()
     {
@@ -103,6 +104,7 @@ public class Player_Movement : MonoBehaviour
 
         var bullet_0 = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         bullet_0.GetComponent<Rigidbody>().linearVelocity = bulletSpawnPoint.forward * bulletSpeed;
+        muzzleflash.Play();
 
         // Trigger shooting once
         if (soldier.action != SoldierAction.Shoot01)
