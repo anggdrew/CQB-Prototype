@@ -59,7 +59,7 @@ public class EnemyAI : MonoBehaviour
                 break;
 
             case State.Chase:
-                agent.SetDestination(player_target.position);
+                agent.SetDestination(player_target.position );
 
                 // Update movement based on current velocity
                 if (currentSpeed < 0.1f)
@@ -76,6 +76,7 @@ public class EnemyAI : MonoBehaviour
                 break;
 
             case State.Attack:
+
                 agent.ResetPath(); // stop moving
                 soldier.movement = SoldierMovement.NoMovement;
 
@@ -108,7 +109,7 @@ public class EnemyAI : MonoBehaviour
 
                 if (LineOfSight())
                 {
-                    agent.ResetPath();
+                    //agent.ResetPath();
                     state = State.Attack;
                 }
 
