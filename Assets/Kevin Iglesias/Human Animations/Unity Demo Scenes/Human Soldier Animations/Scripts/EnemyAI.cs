@@ -71,7 +71,7 @@ public class EnemyAI : MonoBehaviour
 
                 soldier.action = SoldierAction.Nothing;
 
-                if (distance <= attackRange)
+                if (distance <= attackRange && LineOfSight())
                     state = State.Attack;
                 break;
 
