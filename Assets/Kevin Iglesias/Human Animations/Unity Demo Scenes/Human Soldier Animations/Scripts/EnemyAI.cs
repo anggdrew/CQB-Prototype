@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     [Header("References")]
-    public Transform player_target;
+    private Transform player_target;
     public Transform eyePoint;
     public LayerMask losMask;
     private NavMeshAgent agent;
@@ -36,6 +36,7 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
+        player_target = GameObject.FindGameObjectWithTag("Player")?.transform;
         agent = GetComponent<NavMeshAgent>();
         soldier = GetComponent<HumanSoldierController>();
     }
@@ -47,6 +48,10 @@ public class EnemyAI : MonoBehaviour
 
         float distance = Vector3.Distance(transform.position, player_target.position);
         float currentSpeed = agent.velocity.magnitude;
+        Health enemy_healthState = gameObject.GetComponent<Health>();
+
+        if (enemy_healthState.currentHealth <= 0f)
+            Kill();
 
         switch (state)
         {
@@ -59,7 +64,8 @@ public class EnemyAI : MonoBehaviour
                 break;
 
             case State.Chase:
-                agent.SetDestination(player_target.position );
+                
+                agent.SetDestination(player_target.position);
 
                 // Update movement based on current velocity
                 if (currentSpeed < 0.1f)
@@ -73,6 +79,8 @@ public class EnemyAI : MonoBehaviour
 
                 if (distance <= attackRange && LineOfSight())
                     state = State.Attack;
+                else if (distance > detectionRange)
+                    state = State.Idle;
                 break;
 
             case State.Attack:
@@ -81,17 +89,11 @@ public class EnemyAI : MonoBehaviour
                 soldier.movement = SoldierMovement.NoMovement;
 
                 LookAtPlayer();
-
-                if (!LineOfSight())
-                {
-                    state = State.Chase;
-                }
-
                 EnemyShoot();
 
-                if (distance > attackRange)
-
+                if (distance > attackRange || !LineOfSight())
                     state = State.Chase;
+
                 break;
 
             case State.Reposition:
@@ -115,6 +117,7 @@ public class EnemyAI : MonoBehaviour
 
                 break;
         }
+
     }
 
     /// <summary>
@@ -124,7 +127,7 @@ public class EnemyAI : MonoBehaviour
     {
         state = State.Dead;
         soldier.movement = SoldierMovement.NoMovement;
-        soldier.action = SoldierAction.Death01;
+        soldier.action = SoldierAction.Death02;
         agent.enabled = false;
     }
 
@@ -137,10 +140,6 @@ public class EnemyAI : MonoBehaviour
         bullet_0.GetComponent<Rigidbody>().linearVelocity = bulletSpawnPoint.forward * bulletSpeed;
         muzzleflash.Play();
 
-        // Trigger shooting once
-        if (soldier.action != SoldierAction.Shoot01)
-            soldier.action = SoldierAction.Shoot01;
-
         //bulletSpawnPoint.Rotate(-i, -j, -k, Space.Self);
     }
 
@@ -148,6 +147,10 @@ public class EnemyAI : MonoBehaviour
     {
         if (Time.time > lastAttackTime + shot_cooldown)
         {
+            // Trigger shooting once
+            if (soldier.action != SoldierAction.Shoot01)
+                soldier.action = SoldierAction.Shoot01;
+
             BulletSpawner();
             lastAttackTime = Time.time;
         }

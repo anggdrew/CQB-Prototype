@@ -5232,7 +5232,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 8b6f8a2221b39964ca31475404210937, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 1addf099752ba62488a655f79a83a321, type: 2}
+      objectReference: {fileID: 2100000, guid: c2e40fa84d53ccd428f640eac126b1fb, type: 2}
     - target: {fileID: 919132149155446097, guid: 8b6f8a2221b39964ca31475404210937, type: 3}
       propertyPath: m_Name
       value: HumanM_SoldierHelmet
@@ -5798,7 +5798,7 @@ PrefabInstance:
       insertIndex: 0
       addedObject: {fileID: 1940719516265351501}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2faa610713d3b3c439473daa55e8c60a, type: 3}
-      insertIndex: -1
+      insertIndex: 2
       addedObject: {fileID: 6508604613307800075}
     - targetCorrespondingSourceObject: {fileID: -3765236089850875182, guid: 2faa610713d3b3c439473daa55e8c60a, type: 3}
       insertIndex: -1

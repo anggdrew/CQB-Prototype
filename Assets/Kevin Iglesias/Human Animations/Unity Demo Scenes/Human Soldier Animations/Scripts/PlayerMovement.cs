@@ -17,7 +17,7 @@ public class Player_Movement : MonoBehaviour
     Vector3 velocity;
 
     public Transform groundCheck;
-    public float groundRadius = 0.2f;
+    public float groundRadius = 0.5f;
     public LayerMask groundMask;
     public bool isGrounded;
 
@@ -84,32 +84,43 @@ public class Player_Movement : MonoBehaviour
             controller.Move(moveDirn.normalized * speed * Time.deltaTime);     
         }
         else
-        {
             soldier.movement = SoldierMovement.NoMovement;
-        }
-
 
         if (input.Player.Jump.WasPressedThisFrame() && isGrounded)
-            velocity.y = Mathf.Sqrt((jumpHeight * 2 * -gravity) * jumpModifier);
+            soldier.action = SoldierAction.Jump;
+
+        else
+            soldier.action = SoldierAction.Nothing;
 
         if (input.Player.Fire.WasPressedThisFrame())
+        {
+            // Trigger shooting once
+            if (soldier.action != SoldierAction.Shoot01)
+                soldier.action = SoldierAction.Shoot01;
+
             BulletSpawner();
+            BulletSpawner(0, 5, 0);
+            BulletSpawner(0, -5, 0);
+        }
+        else
+            soldier.action = SoldierAction.Nothing;
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
     void BulletSpawner(float i = 0f, float j = 0f, float k = 0f)
     {
-        //bulletSpawnPoint.Rotate(i, j, k, Space.Self);
+        bulletSpawnPoint.Rotate(i, j, k, Space.Self);
 
         var bullet_0 = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         bullet_0.GetComponent<Rigidbody>().linearVelocity = bulletSpawnPoint.forward * bulletSpeed;
         muzzleflash.Play();
 
-        // Trigger shooting once
-        if (soldier.action != SoldierAction.Shoot01)
-            soldier.action = SoldierAction.Shoot01;
-
-        //bulletSpawnPoint.Rotate(-i, -j, -k, Space.Self);
+        bulletSpawnPoint.Rotate(-i, -j, -k, Space.Self);
     }
+    void JumpAction()
+    { 
+        velocity.y = Mathf.Sqrt((jumpHeight * 2 * -gravity) * jumpModifier); 
+    }
+    
 }
