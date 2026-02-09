@@ -87,12 +87,12 @@ public class Player_Movement : MonoBehaviour
             soldier.movement = SoldierMovement.NoMovement;
 
         if (input.Player.Jump.WasPressedThisFrame() && isGrounded)
+        {
             soldier.action = SoldierAction.Jump;
+            velocity.y = Mathf.Sqrt((jumpHeight * 2 * -gravity) * jumpModifier);
+        }
 
-        else
-            soldier.action = SoldierAction.Nothing;
-
-        if (input.Player.Fire.WasPressedThisFrame())
+        else if (input.Player.Fire.WasPressedThisFrame())
         {
             // Trigger shooting once
             if (soldier.action != SoldierAction.Shoot01)
@@ -105,7 +105,7 @@ public class Player_Movement : MonoBehaviour
         else
             soldier.action = SoldierAction.Nothing;
 
-        velocity.y += gravity * Time.deltaTime;
+            velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
     void BulletSpawner(float i = 0f, float j = 0f, float k = 0f)
@@ -118,9 +118,6 @@ public class Player_Movement : MonoBehaviour
 
         bulletSpawnPoint.Rotate(-i, -j, -k, Space.Self);
     }
-    void JumpAction()
-    { 
-        velocity.y = Mathf.Sqrt((jumpHeight * 2 * -gravity) * jumpModifier); 
-    }
+ 
     
 }
