@@ -12,12 +12,17 @@ public class EnemySpawner : MonoBehaviour
     public float spawnOuterRadius = 20f;
     public float spawnerDelay = 5f;
     public float minSpawnInterval = 2f;
+    public bool toggleSpawnerOn = true;
 
     IEnumerator Start()
     {
         yield return new WaitForSeconds(spawnerDelay);
-        StartCoroutine(SpawnEnemies());
-        StartCoroutine(ShortenSpawnInterval());
+        if (toggleSpawnerOn == true)
+        {
+            StartCoroutine(SpawnEnemies());
+            StartCoroutine(ShortenSpawnInterval());
+        }
+        
     }
 
     IEnumerator SpawnEnemies()

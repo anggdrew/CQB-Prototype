@@ -1,6 +1,6 @@
 using KevinIglesias;
 using System.Drawing;
-using Unity.Android.Gradle.Manifest;
+//using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 using UnityEngine.AI;
 
